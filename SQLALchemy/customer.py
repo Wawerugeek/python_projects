@@ -3,7 +3,7 @@ from sqlalchemy import create_engine, MetaData, Table, Integer, String, Column, 
 from datetime import datetime 
 
 engine = create_engine("mysql+mysqldb://root:@localhost/my_data")
-engine.connect()
+conn = engine.connect()
 
 metadata = MetaData()
 
@@ -46,3 +46,18 @@ order_lines = Table('order_lines', metadata,
 )
 
 metadata.create_all(engine)
+
+def create_customer():
+    ins = customers.insert().values(
+    first_name = 'john',
+    last_name = 'steve',
+    username = 'johnsteve',
+    email ="somerandom@gmail.com",
+    address = ' 7974, tyw',
+    town = 'Norfolk'
+)
+    conn.execute(ins)
+    conn.commit()
+
+create_customer()
+conn.close()
