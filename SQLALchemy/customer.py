@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from sqlalchemy import create_engine, MetaData, Table, Integer, String, Column, DateTime, ForeignKey, Numeric, CheckConstraint
+from sqlalchemy import create_engine, MetaData, Table, Integer, String, Column, DateTime, ForeignKey, Numeric, CheckConstraint, Insert
 from datetime import datetime 
 
 engine = create_engine("mysql+mysqldb://root:@localhost/my_data")
@@ -48,15 +48,42 @@ order_lines = Table('order_lines', metadata,
 metadata.create_all(engine)
 
 def create_customer():
-    ins = customers.insert().values(
-    first_name = 'john',
-    last_name = 'steve',
-    username = 'johnsteve',
-    email ="somerandom@gmail.com",
-    address = ' 7974, tyw',
-    town = 'Norfolk'
-)
-    conn.execute(ins)
+    ins = Insert(customers)
+    r = conn.execute(ins, [
+        {
+            "first_name" : 'john',
+            "last_name" :'steve',
+            "username" : 'johnsteve',
+            "email" : "somerandom@gmail.com",
+            "address" : ' 7974, tyw',
+            "town" : 'Norfolk'  
+        },
+        {
+          "first_name": "Sarah", 
+            "last_name": "Tomlin", 
+            "username": "sarahtomlin", 
+            "email":"sarahtomlin@mail.com",
+            "address": "3572 Poplar Avenue",
+            "town": "Norfolk"  
+        }, 
+        {
+            "first_name": "Pablo", 
+            "last_name": "Gibson", 
+            "username": "pablogibson", 
+            "email":"pablogibson@mail.com",
+            "address": "3494 Murry Street",
+            "town": "Peterbrugh"
+        },
+        {
+            "first_name": "Pablo", 
+            "last_name": "Lewis", 
+            "username": "pablolewis", 
+            "email":"pablolewis@mail.com",
+            "address": "3282 Jerry Toth Drive",
+            "town": "Peterbrugh"
+        }
+        
+    ])
     conn.commit()
 
 create_customer()
